@@ -1,0 +1,52 @@
+﻿@model List<Covid.Models.Place>
+
+@{ ViewBag.Title = "TOP 10 COVID-19 Cases"; }
+
+<h2>Top 10 Regions by cases</h2>
+<label>Show Provinces of:  </label>
+<select id="sel_regions">
+    @foreach (var item in Model)
+    {
+<option value="@Html.DisplayFor(modelItem => item.iso )"> @Html.DisplayFor(modelItem => item.name)</option>}
+</select>
+<button id="btn_report" onclick="getProvinces();">Report</button>
+<table class="table" id="report">
+    <thead>
+        <tr>
+            <th>
+                REGION
+            </th>
+            <th>
+                CASES
+            </th>
+            <th>
+                DEATHS
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.confirmed)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.deaths)
+    </td>
+</tr>}
+    </tbody>
+</table>
+
+<script>
+    function getProvinces() {
+        var element = document.getElementById("sel_regions");
+        var url = "/Provinces/Provinces?isoCode=";
+        var isoCode = element.value
+        console.log(url + isoCode);
+        window.location.href = url + isoCode;
+    }
+</script>
